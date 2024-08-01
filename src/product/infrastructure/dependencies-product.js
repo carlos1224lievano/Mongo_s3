@@ -1,0 +1,20 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.productController = exports.deleteProduct = exports.updateProduct = exports.getProductById = exports.createProductUseCase = exports.getProductListUseCase = void 0;
+const create_product_usecase_1 = __importDefault(require("../application/create-product-usecase"));
+const delete_product_usecase_1 = __importDefault(require("../application/delete-product-usecase"));
+const get_product_usecase_1 = __importDefault(require("../application/get-product-usecase"));
+const get_productById_usecase_1 = require("../application/get-productById-usecase");
+const update_product_usecase_1 = __importDefault(require("../application/update-product-usecase"));
+const repository_factory_1 = require("./adapters/repositories/repository-factory");
+const product_controller_1 = __importDefault(require("./controllers/product-controller"));
+const productRepository = repository_factory_1.RepositoryFactory.createProductRepository();
+exports.getProductListUseCase = new get_product_usecase_1.default(productRepository);
+exports.createProductUseCase = new create_product_usecase_1.default(productRepository);
+exports.getProductById = new get_productById_usecase_1.GetProductByID(productRepository);
+exports.updateProduct = new update_product_usecase_1.default(productRepository);
+exports.deleteProduct = new delete_product_usecase_1.default(productRepository);
+exports.productController = new product_controller_1.default(exports.getProductListUseCase, exports.createProductUseCase, exports.getProductById, exports.updateProduct, exports.deleteProduct);
